@@ -8,7 +8,8 @@ UOverlayWidgetController *AAuraHUD::GetOverlayWidgetController( const FWidgetCon
 	if( OverlayWidgetController == nullptr )
 	{
 		OverlayWidgetController = NewObject<UOverlayWidgetController>( this, OverlayWidgetControllerClass );
-		OverlayWidgetController -> SetWidgetControllerParams( WCParams );
+		OverlayWidgetController->SetWidgetControllerParams( WCParams ); 
+		OverlayWidgetController->BindCallbacksToDependencies(); 
 
 		return OverlayWidgetController;
 	}
