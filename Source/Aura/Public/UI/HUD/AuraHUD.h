@@ -6,10 +6,10 @@
 
 
 class UAbilitySystemComponent;
+class UAttributeMenuWidgetController;
 class UAttributeSet;
 class UAuraUserWidget;
 class UOverlayWidgetController;
-class UAttributeMenuWidgetController;
 struct FWidgetControllerParams;
 
 
