@@ -1,8 +1,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AttributeSet.h"
 #include "AbilitySystemComponent.h"
+#include "AttributeSet.h"
 #include "AuraAttributeSet.generated.h"
 
 
@@ -11,6 +11,12 @@
  	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
  	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+
+
+// typedef is specific to the FGameplayAttribute() signature, but TStaticFuncPtr is generic to any signature chosen
+// typedef TBaseStaticDelegateInstance<FGameplayAttribute(), FDefaultDelegateUserPolicy>::FFuncPtr FAttributeFuncPtr;
+template<class T>
+using TStaticFuncPtr = typename TBaseStaticDelegateInstance<T, FDefaultDelegateUserPolicy>::FFuncPtr;
 
 
 USTRUCT()
@@ -49,9 +55,13 @@ class AURA_API UAuraAttributeSet : public UAttributeSet
 	
 public:
 	UAuraAttributeSet();
+
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty> &OutLifetimeProps ) const override;
 	virtual void PreAttributeChange( const FGameplayAttribute &Attribute, float &NewValue )override;
 	virtual void PostGameplayEffectExecute( const FGameplayEffectModCallbackData &Data )override;
+
+	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes; // you CAN map gameplay tags to function pointers!
+
 
 	/*
 	* Primary Attributes
