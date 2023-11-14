@@ -6,7 +6,7 @@
 
 void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 { 
-	OnGameplayEffectAppliedDelegateToSelf.AddUObject( this, &UAuraAbilitySystemComponent::EffectApplied );
+	OnGameplayEffectAppliedDelegateToSelf.AddUObject( this, &UAuraAbilitySystemComponent::ClientEffectApplied );
 }
 
 void UAuraAbilitySystemComponent::AddCharacterAbilities( const TArray<TSubclassOf<UGameplayAbility>> &StartupAbilities )
@@ -41,7 +41,7 @@ void UAuraAbilitySystemComponent::AbilityInputTagHeld( const FGameplayTag &Input
 
 void UAuraAbilitySystemComponent::AbilityInputTagReleased( const FGameplayTag & InputTag )
 { 
-	if( !InputTag.IsValid() )return;
+	if( !InputTag.IsValid() ) return;
 
 	for( FGameplayAbilitySpec &AbilitySpec : GetActivatableAbilities() )
 	{
@@ -52,7 +52,8 @@ void UAuraAbilitySystemComponent::AbilityInputTagReleased( const FGameplayTag & 
 	}
 }
 
-void UAuraAbilitySystemComponent::EffectApplied( UAbilitySystemComponent *AbilitySystemComponent, const FGameplayEffectSpec &EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle )
+void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation( UAbilitySystemComponent *AbilitySystemComponent, 
+																	  const FGameplayEffectSpec &EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle )
 { 
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags( TagContainer );
