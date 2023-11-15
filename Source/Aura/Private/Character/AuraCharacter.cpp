@@ -1,11 +1,11 @@
 #include "Character/AuraCharacter.h"
 
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystemComponent.h"
-#include "AbilitySystem//AuraAbilitySystemComponent.h"
-#include "GameFramework/CharacterMovementComponent.h"
-#include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
 #include "UI/HUD/AuraHUD.h"
@@ -24,14 +24,13 @@ AAuraCharacter::AAuraCharacter()
 
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>( TEXT( "CameraArm" ) );
 	CameraArm->SetupAttachment( GetCapsuleComponent() );
-	CameraArm->TargetArmLength = 750.f;
+	CameraArm->TargetArmLength = 800.f;
 	CameraArm->SetRelativeRotation( FRotator( -45.f, 0.f, 0.f ) );
 	CameraArm->bUsePawnControlRotation = false;
 	CameraArm->bEnableCameraLag = true;
 	CameraArm->bInheritPitch = false;
 	CameraArm->bInheritYaw = false;
 	CameraArm->bInheritRoll = false;
-
 
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>( TEXT( "FollowCamera" ) );
 	FollowCamera->SetupAttachment( CameraArm, USpringArmComponent::SocketName );
@@ -71,8 +70,8 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
-	// Only want to continue if not null, but don't want to place an assert b/c don't want to crash 
-	// In multiplayer client's player controller will be valid on their machine, but other players' won't
+	// In multiplayer client's player controller will be valid on their machine, but other players' controllers won't
+	// Only want to continue if not null, but don't assert as this will cause unwanted crash
 	if( AAuraPlayerController *AuraPlayerController = Cast<AAuraPlayerController>( GetController() ) )
 	{
 		if( AAuraHUD *AuraHUD = Cast<AAuraHUD>( AuraPlayerController->GetHUD() ) )

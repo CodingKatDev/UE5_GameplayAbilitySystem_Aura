@@ -1,7 +1,7 @@
 #include "Character/AuraCharacterBase.h"
 
-#include "AbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystemComponent.h"
 
 
 AAuraCharacterBase::AAuraCharacterBase()
@@ -16,6 +16,17 @@ AAuraCharacterBase::AAuraCharacterBase()
 UAbilitySystemComponent *AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent; 
+}
+
+void AAuraCharacterBase::BeginPlay()
+{ 
+	Super::BeginPlay();
+}
+
+FVector AAuraCharacterBase::GetCombatSocketLocation()
+{
+	check( Weapon );
+	return Weapon->GetSocketLocation( WeaponTipSocketName );
 }
 
 void AAuraCharacterBase::InitAbilityActorInfo()

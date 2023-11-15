@@ -25,8 +25,15 @@ public:
 	UAttributeSet *GetAttributeSet() const { return AttributeSet; }
 
 protected:
+	virtual void BeginPlay() override;
+
 	UPROPERTY( EditAnywhere, Category = "Combat" )
 	TObjectPtr<USkeletalMeshComponent> Weapon;
+
+	UPROPERTY( EditAnywhere, Category = "Combat" )
+	FName WeaponTipSocketName;
+
+	virtual FVector GetCombatSocketLocation() override;
 
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
