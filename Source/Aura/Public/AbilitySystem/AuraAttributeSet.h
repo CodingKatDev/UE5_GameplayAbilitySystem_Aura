@@ -64,8 +64,8 @@ public:
 
 
 	/*
-	* Primary Attributes
-	* */
+	 * Primary Attributes
+	 */
 	UPROPERTY( BLueprintReadOnly, ReplicatedUsing = OnRep_Strength, Category = "Primary Attributes" )
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Strength );
@@ -95,8 +95,8 @@ public:
 	void OnRep_Vigor( const FGameplayAttributeData &OldVigor )const;
 
 	/*
-	* Secondary Attributes
-	* */ 
+	 * Secondary Attributes
+	 */ 
 	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_Armor, Category = "Secondary Attributes" )
 	FGameplayAttributeData Armor;
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Armor );
@@ -168,8 +168,8 @@ public:
 	void OnRep_MaxMana( const FGameplayAttributeData &OldMaxMana )const;
 
 	/*
-	* Vital Attributes
-	* */
+	 * Vital Attributes
+	 */
 	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes" )
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Health );
@@ -184,6 +184,12 @@ public:
 	UFUNCTION()
 	void OnRep_Mana( const FGameplayAttributeData &OldMana ) const;
 
+	/*
+	 * Meta Attributes
+	 */
+	UPROPERTY( BlueprintReadOnly, Category = "Meta Attributes" )
+	FGameplayAttributeData IncomingDamage;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, IncomingDamage );
 
 private:
 	void SetEffectProperties( const FGameplayEffectModCallbackData &Data, FEffectProperties &Props ) const;
