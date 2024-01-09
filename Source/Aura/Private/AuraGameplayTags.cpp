@@ -47,8 +47,13 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Input_Key_3 = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Input.Key.3" ), FString( "Input Tag for Key 3" ) );
 	GameplayTags.Input_Key_4 = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Input.Key.4" ), FString( "Input Tag for Key 4" ) );
 
-	/*
+   /*
 	* Meta Attributes
 	*/
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Damage" ), FString( "Damage" ) );
+
+   /*
+	* Effects
+	*/
+	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Effects.HitReact" ), FString( "Tag granted when Hit Reacting" ) );
 }
