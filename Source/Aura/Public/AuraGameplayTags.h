@@ -46,8 +46,9 @@ public:
 	FGameplayTag Input_Key_3;
 	FGameplayTag Input_Key_4;
 
+	/* Meta Attributes */
+	FGameplayTag Damage;
 
 private:
 	static FAuraGameplayTags GameplayTags;
-
 };

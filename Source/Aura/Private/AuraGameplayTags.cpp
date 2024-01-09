@@ -9,7 +9,7 @@ FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 void FAuraGameplayTags::InitializeNativeGameplayTags()
 { 
 
-   /**
+   /*
 	* Primary Attributes
 	*/
 	GameplayTags.Attributes_Primary_Strength = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Primary.Strength" ), FString( "Increases physical damage" ) );
@@ -17,7 +17,7 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Attributes_Primary_Resilience = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Primary.Resilience" ), FString( "Increases Armor and Armor Penetration" ) );
 	GameplayTags.Attributes_Primary_Vigor = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Primary.Vigor" ), FString( "Increases Health" ) );
 
-   /**
+   /*
 	* Secondary Attributes
 	*/
 	GameplayTags.Attributes_Secondary_Armor = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Secondary.Armor" ), FString( "Reduces damage taken, improves Block Chance" ) );
@@ -31,13 +31,13 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Attributes_Secondary_MaxHealth = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Secondary.MaxHealth" ), FString( "Maximum amount of Health obtainable" ) );
 	GameplayTags.Attributes_Secondary_MaxMana = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Secondary.MaxMana" ), FString( "Maximum amount of Mana obtainable" ) );
 
-   /**
+   /*
 	* Vital Attributes
 	*/
 	GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Vital.Health" ), FString( "Amount of damage a player can take before death" ) );
 	GameplayTags.Attributes_Vital_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Vital.Mana" ), FString( "A resource used to cast spells" ) );
 
-   /**
+   /*
 	* Inputs
 	*/
 	GameplayTags.Input_Mouse_LeftButton = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Input.Mouse.LeftButton" ), FString( "Input Tag for Left Mouse Button" ) );
@@ -46,4 +46,9 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.Input_Key_2 = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Input.Key.2" ), FString( "Input Tag for Key 2" ) );
 	GameplayTags.Input_Key_3 = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Input.Key.3" ), FString( "Input Tag for Key 3" ) );
 	GameplayTags.Input_Key_4 = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Input.Key.4" ), FString( "Input Tag for Key 4" ) );
+
+	/*
+	* Meta Attributes
+	*/
+	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Damage" ), FString( "Damage" ) );
 }
