@@ -94,6 +94,7 @@ public:
 	UFUNCTION()
 	void OnRep_Vigor( const FGameplayAttributeData &OldVigor )const;
 
+
 	/*
 	 * Secondary Attributes
 	 */ 
@@ -167,6 +168,7 @@ public:
 	UFUNCTION()
 	void OnRep_MaxMana( const FGameplayAttributeData &OldMaxMana )const;
 
+
 	/*
 	 * Vital Attributes
 	 */
@@ -184,6 +186,7 @@ public:
 	UFUNCTION()
 	void OnRep_Mana( const FGameplayAttributeData &OldMana ) const;
 
+
 	/*
 	 * Meta Attributes
 	 */
@@ -193,4 +196,5 @@ public:
 
 private:
 	void SetEffectProperties( const FGameplayEffectModCallbackData &Data, FEffectProperties &Props ) const;
+	void ShowFloatingText( const FEffectProperties &Props, float Damage ) const;
 };
