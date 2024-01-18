@@ -1,5 +1,6 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
 #include "Player/AuraPlayerController.h"
@@ -154,12 +155,14 @@ void UAuraAttributeSet::PostGameplayEffectExecute( const FGameplayEffectModCallb
 				Props.TargetASC->TryActivateAbilitiesByTag( TagContainer );
 			}
 
-			ShowFloatingText( Props, LocalIncomingDamage );
+			const bool bBlock = UAuraAbilitySystemLibrary::IsBlockedHit( Props.EffectContextHandle );
+			const bool bCriticalHit = UAuraAbilitySystemLibrary::IsCriticalHit( Props.EffectContextHandle );
+			ShowFloatingText( Props, LocalIncomingDamage, bBlock, bCriticalHit );
 		}
 	}
 }
 
-void UAuraAttributeSet::ShowFloatingText( const FEffectProperties &Props, float Damage ) const
+void UAuraAttributeSet::ShowFloatingText( const FEffectProperties &Props, float Damage, bool bBlockedHit, bool bCriticalHit ) const
 {
 	if( Props.SourceCharacter != Props.TargetCharacter )
 	{
