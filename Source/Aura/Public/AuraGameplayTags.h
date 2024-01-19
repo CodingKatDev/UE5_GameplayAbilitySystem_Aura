@@ -46,8 +46,11 @@ public:
 	FGameplayTag Input_Key_3;
 	FGameplayTag Input_Key_4;
 
-	/* Meta Attributes */
+	/* Damage and Types */
 	FGameplayTag Damage;
+	FGameplayTag Damage_Fire;
+
+	TArray<FGameplayTag> DamageTypes;
 
 	/* Effects */
 	FGameplayTag Effects_HitReact;
