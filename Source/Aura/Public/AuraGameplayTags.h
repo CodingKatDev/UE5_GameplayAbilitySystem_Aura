@@ -4,17 +4,19 @@
 #include "GameplayTagContainer.h"
 
 
-/**
- * AuraGameplayTags
- * 
- * Singleton containing native Gameplay Tags
- */
-
 struct FAuraGameplayTags
 {
 public:
 	static const FAuraGameplayTags &Get() { return GameplayTags; }
 	static void InitializeNativeGameplayTags();
+
+	/* Inputs */
+	FGameplayTag Input_Mouse_LeftButton;
+	FGameplayTag Input_Mouse_RightButton;
+	FGameplayTag Input_Key_1;
+	FGameplayTag Input_Key_2;
+	FGameplayTag Input_Key_3;
+	FGameplayTag Input_Key_4;
 
 	/* Primary Attributes */
 	FGameplayTag Attributes_Primary_Strength;
@@ -38,19 +40,20 @@ public:
 	FGameplayTag Attributes_Vital_Health;
 	FGameplayTag Attributes_Vital_Mana;
 
-	/* Inputs */
-	FGameplayTag Input_Mouse_LeftButton;
-	FGameplayTag Input_Mouse_RightButton;
-	FGameplayTag Input_Key_1;
-	FGameplayTag Input_Key_2;
-	FGameplayTag Input_Key_3;
-	FGameplayTag Input_Key_4;
+	/* Resistances */
+	FGameplayTag Attributes_Resistance_Fire;
+	FGameplayTag Attributes_Resistance_Lightning;
+	FGameplayTag Attributes_Resistance_Arcane;
+	FGameplayTag Attributes_Resistance_Physical;
 
 	/* Damage and Types */
 	FGameplayTag Damage;
 	FGameplayTag Damage_Fire;
+	FGameplayTag Damage_Lightning;
+	FGameplayTag Damage_Arcane;
+	FGameplayTag Damage_Physical;
 
-	TArray<FGameplayTag> DamageTypes;
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
 	/* Effects */
 	FGameplayTag Effects_HitReact;
