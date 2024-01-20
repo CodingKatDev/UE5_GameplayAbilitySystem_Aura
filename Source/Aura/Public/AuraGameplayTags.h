@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 
 
@@ -17,6 +16,10 @@ public:
 	FGameplayTag Input_Key_2;
 	FGameplayTag Input_Key_3;
 	FGameplayTag Input_Key_4;
+
+	/* Vital Attributes */
+	FGameplayTag Attributes_Vital_Health;
+	FGameplayTag Attributes_Vital_Mana;
 
 	/* Primary Attributes */
 	FGameplayTag Attributes_Primary_Strength;
@@ -36,21 +39,17 @@ public:
 	FGameplayTag Attributes_Secondary_MaxHealth;
 	FGameplayTag Attributes_Secondary_MaxMana;
 
-	/* Vital Attributes */
-	FGameplayTag Attributes_Vital_Health;
-	FGameplayTag Attributes_Vital_Mana;
-
 	/* Resistances */
+	FGameplayTag Attributes_Resistance_Arcane;
 	FGameplayTag Attributes_Resistance_Fire;
 	FGameplayTag Attributes_Resistance_Lightning;
-	FGameplayTag Attributes_Resistance_Arcane;
 	FGameplayTag Attributes_Resistance_Physical;
 
 	/* Damage and Types */
 	FGameplayTag Damage;
+	FGameplayTag Damage_Arcane;
 	FGameplayTag Damage_Fire;
 	FGameplayTag Damage_Lightning;
-	FGameplayTag Damage_Arcane;
 	FGameplayTag Damage_Physical;
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;

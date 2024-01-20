@@ -1,6 +1,5 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
 #include "AttributeSet.h"
 #include "AuraAttributeSet.generated.h"
@@ -61,6 +60,23 @@ public:
 	virtual void PostGameplayEffectExecute( const FGameplayEffectModCallbackData &Data )override;
 
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes; // you CAN map gameplay tags to function pointers!
+
+	/*
+	 * Vital Attributes
+	 */
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes" )
+	FGameplayAttributeData Health;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Health );
+
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributes" )
+	FGameplayAttributeData Mana;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Mana );
+
+	UFUNCTION()
+	void OnRep_Health( const FGameplayAttributeData OldHealth ) const;
+
+	UFUNCTION()
+	void OnRep_Mana( const FGameplayAttributeData &OldMana ) const;
 
 
 	/*
@@ -130,11 +146,11 @@ public:
 	FGameplayAttributeData ManaRegeneration;
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, ManaRegeneration );
 
-	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Secondary Attributes" )
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_MaxHealth, Category = "Vital Attributes" )
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, MaxHealth );
 
-	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Secondary Attributes" )
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_MaxMana, Category = "Vital Attributes" )
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, MaxMana );
 
@@ -167,24 +183,38 @@ public:
 
 	UFUNCTION()
 	void OnRep_MaxMana( const FGameplayAttributeData &OldMaxMana )const;
+	
+   
+   /*
+	* Resistance Attributes
+	*/
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_ArcaneResistance, Category = "Resistance Attributes" )
+	FGameplayAttributeData ArcaneResistance;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, ArcaneResistance );
 
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_FireResistance, Category = "Resistance Attributes" )
+	FGameplayAttributeData FireResistance;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, FireResistance );
 
-	/*
-	 * Vital Attributes
-	 */
-	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_Health, Category = "Vital Attributes" )
-	FGameplayAttributeData Health;
-	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Health );
-
-	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_Mana, Category = "Vital Attributes" )
-	FGameplayAttributeData Mana;
-	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, Mana );
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_LightningResistance, Category = "Resistance Attributes" )
+	FGameplayAttributeData LightningResistance;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, LightningResistance );
+	
+	UPROPERTY( BlueprintReadOnly, ReplicatedUsing = OnRep_PhysicalResistance, Category = "Resistance Attributes" )
+	FGameplayAttributeData PhysicalResistance;
+	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, PhysicalResistance );
 
 	UFUNCTION()
-	void OnRep_Health( const FGameplayAttributeData OldHealth ) const;
+	void OnRep_ArcaneResistance( const FGameplayAttributeData &OldArcaneResistance )const;
+	
+	UFUNCTION()
+	void OnRep_FireResistance( const FGameplayAttributeData &OldFireResistance )const;
 
 	UFUNCTION()
-	void OnRep_Mana( const FGameplayAttributeData &OldMana ) const;
+	void OnRep_LightningResistance( const FGameplayAttributeData &OldLightningResistance )const;
+
+	UFUNCTION()
+	void OnRep_PhysicalResistance( const FGameplayAttributeData &OldPhysicalResistance )const;
 
 
 	/*
