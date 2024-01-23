@@ -178,7 +178,7 @@ void UAuraAttributeSet::ShowFloatingText( const FEffectProperties &Props, float 
 {
 	if( Props.SourceCharacter != Props.TargetCharacter )
 	{
-		if( AAuraPlayerController *PC = Cast<AAuraPlayerController>( UGameplayStatics::GetPlayerController( Props.SourceCharacter, 0 ) ) )
+		if( AAuraPlayerController *PC = Cast<AAuraPlayerController>( Props.SourceCharacter->Controller ) )
 		{
 			PC->ShowDamageNumber( Damage, Props.TargetCharacter, bBlockedHit, bCriticalHit );
 		}
@@ -198,7 +198,6 @@ void UAuraAttributeSet::OnRep_Mana( const FGameplayAttributeData &OldMana ) cons
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY( UAuraAttributeSet, Mana, OldMana );
 }
-
 
 /*
  * Primary Attributes
@@ -222,7 +221,6 @@ void UAuraAttributeSet::OnRep_Vigor( const FGameplayAttributeData &OldVigor ) co
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY( UAuraAttributeSet, Vigor, OldVigor );
 }
-
 
 /*
  * Secondary Attributes
@@ -276,7 +274,6 @@ void UAuraAttributeSet::OnRep_MaxMana( const FGameplayAttributeData &OldMaxMana 
 {
 	GAMEPLAYATTRIBUTE_REPNOTIFY( UAuraAttributeSet, MaxMana, OldMaxMana );
 }
-
 
 /*
  * Resistances

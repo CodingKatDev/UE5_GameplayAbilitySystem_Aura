@@ -1,7 +1,7 @@
 #include "Player/AuraPlayerController.h"
 
-#include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
 #include "AuraGameplayTags.h"
 #include "Components/SplineComponent.h"
 #include "EnhancedInputSubsystems.h"
@@ -28,7 +28,7 @@ void AAuraPlayerController::PlayerTick( float DeltaTime )
 
 void AAuraPlayerController::ShowDamageNumber_Implementation( float DamageAmount, ACharacter *TargetCharacter, bool bBlockedHit, bool bCriticalHit )
 {
-	if( IsValid( TargetCharacter ) && DamageTextComponentClass )
+	if( IsValid( TargetCharacter ) && DamageTextComponentClass && IsLocalController() )
 	{
 		UDamageTextComponent *DamageText = NewObject<UDamageTextComponent>( TargetCharacter, DamageTextComponentClass );
 		DamageText->RegisterComponent();
