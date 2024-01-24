@@ -15,6 +15,8 @@
 
 AAuraEnemy::AAuraEnemy()
 { 
+	this->Tags.Add( "Enemy" );
+
 	GetMesh()->SetCollisionResponseToChannel( ECC_Visibility, ECR_Block );
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>( "AbilitySystemComponent" );
