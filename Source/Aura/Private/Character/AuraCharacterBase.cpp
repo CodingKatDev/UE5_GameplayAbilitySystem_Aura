@@ -3,6 +3,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystemComponent.h"
 #include "Aura/Aura.h"
+#include "AuraGameplayTags.h"
 #include "Components/CapsuleComponent.h"
 
 
@@ -37,10 +38,23 @@ void AAuraCharacterBase::Die()
 	MulticastHandleDeath();
 }
 
-FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation()
+FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation( const FGameplayTag &MontageTag )
 {
-	check( Weapon );
-	return Weapon->GetSocketLocation( WeaponTipSocketName );
+	// TODO: Could make this a TMap
+	const FAuraGameplayTags &GameplayTags = FAuraGameplayTags::Get();
+	if( MontageTag.MatchesTagExact( GameplayTags.Montage_Attack_Weapon ) && IsValid( Weapon ) )
+	{
+		return Weapon->GetSocketLocation( WeaponTipSocketName );
+	}
+	if( MontageTag.MatchesTagExact( GameplayTags.Montage_Attack_RightHand ) )
+	{
+		return GetMesh()->GetSocketLocation(RightHandSocketName);
+	}
+	if( MontageTag.MatchesTagExact( GameplayTags.Montage_Attack_LeftHand ) )
+	{
+		return GetMesh()->GetSocketLocation( LeftHandSocketName );
+	}
+	return FVector();
 }
 
 bool AAuraCharacterBase::IsDead_Implementation() const
@@ -51,6 +65,11 @@ bool AAuraCharacterBase::IsDead_Implementation() const
 AActor *AAuraCharacterBase::GetAvatar_Implementation()
 {
 	return this;
+}
+
+TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation()
+{
+	return AttackMontages;
 }
 
 void AAuraCharacterBase::MulticastHandleDeath_Implementation()
