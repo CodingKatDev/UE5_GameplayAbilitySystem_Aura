@@ -27,15 +27,20 @@ UAbilitySystemComponent *AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent; 
 }
 
-UAnimMontage *AAuraCharacterBase::GetHitReactMontage_Implementation()
-{
-	return HitReactMontage;
-}
-
 void AAuraCharacterBase::Die()
 {
 	Weapon->DetachFromComponent( FDetachmentTransformRules( EDetachmentRule::KeepWorld, true ) );
 	MulticastHandleDeath();
+}
+
+bool AAuraCharacterBase::IsDead_Implementation() const
+{
+	return bDead;
+}
+
+AActor *AAuraCharacterBase::GetAvatar_Implementation()
+{
+	return this;
 }
 
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation( const FGameplayTag &MontageTag )
@@ -57,14 +62,9 @@ FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation( const FGamep
 	return FVector();
 }
 
-bool AAuraCharacterBase::IsDead_Implementation() const
+UAnimMontage *AAuraCharacterBase::GetHitReactMontage_Implementation()
 {
-	return bDead;
-}
-
-AActor *AAuraCharacterBase::GetAvatar_Implementation()
-{
-	return this;
+	return HitReactMontage;
 }
 
 TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation()
