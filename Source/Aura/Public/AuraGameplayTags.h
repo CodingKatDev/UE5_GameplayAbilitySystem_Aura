@@ -60,10 +60,16 @@ public:
 	/* Abilities */
 	FGameplayTag Abilities_Attack;
 
-	/* Montage Socket Locations */
-	FGameplayTag Montage_Attack_Weapon;
-	FGameplayTag Montage_Attack_RightHand;
-	FGameplayTag Montage_Attack_LeftHand;
+	/* Combat Sockets */
+	FGameplayTag CombatSocket_Weapon;
+	FGameplayTag CombatSocket_RightHand;
+	FGameplayTag CombatSocket_LeftHand;
+
+	/* Montages */
+	FGameplayTag Montage_Attack_1;
+	FGameplayTag Montage_Attack_2;
+	FGameplayTag Montage_Attack_3;
+	FGameplayTag Montage_Attack_4;
 
 private:
 	static FAuraGameplayTags GameplayTags;
