@@ -51,7 +51,7 @@ public:
 	AActor *GetAvatar();
 
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable )
-	void UpdateFacingTarget ( const FVector &Target );
+	void UpdateFacingTarget( const FVector &Target );
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
 	FVector GetCombatSocketLocation( const FGameplayTag &MontageTag );
@@ -67,4 +67,7 @@ public:
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
 	FTaggedMontage GetTaggedMontageByTag( const FGameplayTag &MontageTag );
+
+	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
+	int32 GetMinionCount();
 };
