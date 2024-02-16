@@ -20,6 +20,8 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities( const TArray<TSubclassO
 			GiveAbility( AbilitySpec );
 		}
 	}
+	bStartupAbilitiesGiven = true;
+	AbilitiesGivenDelegate.Broadcast( this );
 }
 
 void UAuraAbilitySystemComponent::AbilityInputTagHeld( const FGameplayTag &InputTag )
@@ -58,5 +60,5 @@ void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation( UAbilitySy
 	FGameplayTagContainer TagContainer;
 	EffectSpec.GetAllAssetTags( TagContainer );
 
-	EffectAssetTags.Broadcast( TagContainer );
+	EffectAssetTagsDelegate.Broadcast( TagContainer );
 }
