@@ -1,13 +1,13 @@
 #pragma once
 
+#include "AbilitySystem/Data/AbilityInfo.h"
 #include "CoreMinimal.h"
-#include "GameplayTagContainer.h" 
 #include "Engine/DataTable.h"
+#include "GameplayTagContainer.h"
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "OverlayWidgetController.generated.h"
 
 
-class UAbilityInfo;
 class UAuraAbilitySystemComponent;
 class UAuraUserWidget;
 struct FOnAttributeChangeData;
@@ -33,6 +33,7 @@ struct FUIWidgetRow : public FTableRowBase
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnAttributeChangedSignature, float, NewValue );
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FMessageWidgetRowSignature, FUIWidgetRow, Row );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FAbilityInfoSignature, const FAuraAbilityInfo &, Info );
 
 
 UCLASS( BlueprintType, Blueprintable )
@@ -57,7 +58,10 @@ public:
 	FOnAttributeChangedSignature OnMaxManaChanged;
 
 	UPROPERTY( BlueprintAssignable, Category = "GAS|Messages" )
-	FMessageWidgetRowSignature MessageWidgetRow;
+	FMessageWidgetRowSignature MessageWidgetRowDelegate;
+
+	UPROPERTY( BlueprintAssignable, Category = "GAS|Messages" )
+	FAbilityInfoSignature AbilityInfoDelegate;
 
 protected:
 	UPROPERTY( EditDefaultsOnly, BlueprintReadOnly, Category = "Widget Data" )

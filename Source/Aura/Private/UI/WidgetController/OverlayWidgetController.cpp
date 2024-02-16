@@ -52,7 +52,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 					if( Tag.MatchesTag( MessageTag ) )
 					{
 						const FUIWidgetRow *Row = GetDataTableRowByTag<FUIWidgetRow>( MessageWidgetDataTable, Tag );
-						MessageWidgetRow.Broadcast( *Row );
+						MessageWidgetRowDelegate.Broadcast( *Row );
 					}
 				}
 			} );
@@ -61,8 +61,18 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 
 void UOverlayWidgetController::OnInitializeStartupAbilities( UAuraAbilitySystemComponent *AuraAbilitySystemComponent )
 {
-	//TODO Get information about all given abilities, look up their Ability Info, and broadcast it to widgets.
+	// Get information about all given abilities, look up their Ability Info, and broadcast it to widgets
 	if( !AuraAbilitySystemComponent->bStartupAbilitiesGiven ) return;
 
+	FForEachAbility BroadcastDelegate;
+	BroadcastDelegate.BindLambda( 
+		[ this ]( const FGameplayAbilitySpec &AbilitySpec )
+		{
+			// Get the Ability Tag for a given Ability Spec
+			FAuraAbilityInfo Info = AbilityInfo->FindAbilityInfoForTag( UAuraAbilitySystemComponent::GetAbilityTagFromSpec( AbilitySpec ) );
+			Info.InputTag = UAuraAbilitySystemComponent::GetInputTagFromSpec( AbilitySpec );
+			AbilityInfoDelegate.Broadcast( Info );
+		} );
 
+	AuraAbilitySystemComponent->ForEachAbility( BroadcastDelegate );
 }
