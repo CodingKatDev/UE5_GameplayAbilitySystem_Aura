@@ -1,12 +1,13 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "AuraAbilitySystemComponent.generated.h"
 
 
 DECLARE_MULTICAST_DELEGATE_OneParam( FEffectAssetTags, const FGameplayTagContainer & /*AssetTags*/ );
-DECLARE_MULTICAST_DELEGATE_OneParam( FAbilitiesGiven, UAuraAbilitySystemComponent* );
+DECLARE_MULTICAST_DELEGATE_OneParam( FAbilitiesGiven, UAuraAbilitySystemComponent * );
 DECLARE_DELEGATE_OneParam( FForEachAbility, const FGameplayAbilitySpec & );
 
 
@@ -32,6 +33,8 @@ public:
 	static FGameplayTag GetInputTagFromSpec( const FGameplayAbilitySpec &AbilitySpec );
 
 protected:
+	virtual void OnRep_ActivateAbilities() override;
+
 	UFUNCTION( Client, Reliable )
 	void ClientEffectApplied( UAbilitySystemComponent *AbilitySystemComponent, const FGameplayEffectSpec &EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle );
 };

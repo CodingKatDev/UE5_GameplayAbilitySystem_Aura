@@ -1,7 +1,6 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
-#include "AuraGameplayTags.h"
 #include "Aura/AuraLogChannels.h"
 
 
@@ -87,13 +86,24 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec( const FGameplayAb
 {
 	for( FGameplayTag Tag : AbilitySpec.DynamicAbilityTags )
 	{
-		if( Tag.MatchesTag( FGameplayTag::RequestGameplayTag( FName( "InputTag" ) ) ) )
+		if( Tag.MatchesTag( FGameplayTag::RequestGameplayTag( FName( "Input" ) ) ) )
 		{
 			return Tag;
 		}
 	}
 
 	return FGameplayTag();
+}
+
+void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
+{
+	Super::OnRep_ActivateAbilities();
+
+	if( !bStartupAbilitiesGiven )
+	{
+		bStartupAbilitiesGiven = true;
+		AbilitiesGivenDelegate.Broadcast( this );
+	}
 }
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation( UAbilitySystemComponent *AbilitySystemComponent, 

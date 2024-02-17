@@ -21,7 +21,7 @@ struct FAuraAbilityInfo
 	TObjectPtr<const UTexture2D> Icon = nullptr;
 
 	UPROPERTY( EditDefaultsOnly, BlueprintReadOnly )
-	TObjectPtr<UMaterialInstance> BackgroundMaterial = nullptr; // UMaterialInterface??
+	TObjectPtr<UMaterialInterface> BackgroundMaterial = nullptr;
 };
 
 
