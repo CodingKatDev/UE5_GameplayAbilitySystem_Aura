@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "UObject/Interface.h"
@@ -73,4 +74,7 @@ public:
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
 	void UpdateMinionCount(int32 Amount);
+
+	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
+	ECharacterClass GetCharacterClass();
 };

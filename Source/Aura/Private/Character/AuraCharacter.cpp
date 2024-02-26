@@ -37,6 +37,8 @@ AAuraCharacter::AAuraCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>( TEXT( "FollowCamera" ) );
 	FollowCamera->SetupAttachment( CameraArm, USpringArmComponent::SocketName );
 	FollowCamera->bUsePawnControlRotation = false;
+
+	CharacterClass = ECharacterClass::Elementalist;
 }
 
 void AAuraCharacter::PossessedBy( AController *NewController )
@@ -72,7 +74,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
 
-	// In multiplayer client's player controller will be valid on their machine, but other players' controllers won't
+	// In multi-player client's player controller will be valid on their machine, but other players' controllers won't
 	// Only want to continue if not null, but don't assert as this will cause unwanted crash
 	if( AAuraPlayerController *AuraPlayerController = Cast<AAuraPlayerController>( GetController() ) )
 	{

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
@@ -61,9 +60,6 @@ protected:
 
 	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults" )
 	int32 Level = 1;
-
-	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults" )
-	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
 	UPROPERTY( VisibleAnywhere, BlueprintReadOnly )
 	TObjectPtr<UWidgetComponent> HealthBar;
