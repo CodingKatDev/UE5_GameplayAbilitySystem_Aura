@@ -21,6 +21,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
    /*
 	* Vital Attributes
 	*/
+	GameplayTags.Attributes_Meta_IncomingXP = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Meta.IncomingXP" ), FString( "Incoming XP Meta Attribute" ) );
+
+   /*
+	* Vital Attributes
+	*/
 	GameplayTags.Attributes_Vital_Health = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Vital.Health" ), FString( "Amount of damage a player can take before death" ) );
 	GameplayTags.Attributes_Vital_Mana = UGameplayTagsManager::Get().AddNativeGameplayTag( FName( "Attributes.Vital.Mana" ), FString( "A resource used to cast spells" ) );
 

@@ -17,6 +17,9 @@ public:
 	FGameplayTag Input_Key_3;
 	FGameplayTag Input_Key_4;
 
+	/* Meta Attributes */
+	FGameplayTag Attributes_Meta_IncomingXP;
+
 	/* Vital Attributes */
 	FGameplayTag Attributes_Vital_Health;
 	FGameplayTag Attributes_Vital_Mana;
