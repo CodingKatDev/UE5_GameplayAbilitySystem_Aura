@@ -4,9 +4,10 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "Camera/CameraComponent.h"
-#include "Components/CapsuleComponent.h"
+//#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "NiagaraComponent.h"
 #include "Player/AuraPlayerController.h"
 #include "Player/AuraPlayerState.h"
 #include "UI/HUD/AuraHUD.h"
@@ -16,17 +17,8 @@ AAuraCharacter::AAuraCharacter()
 { 
 	this->Tags.Add( "Player" );
 
-	GetCharacterMovement()->bOrientRotationToMovement = true;
-	GetCharacterMovement()->RotationRate = FRotator( 0.f, 400.f, 0.f );
-	GetCharacterMovement()->bConstrainToPlane = true;
-	GetCharacterMovement()->bSnapToPlaneAtStart = true;
-
-	bUseControllerRotationPitch = false;
-	bUseControllerRotationYaw = false;
-	bUseControllerRotationRoll = false;
-
 	CameraArm = CreateDefaultSubobject<USpringArmComponent>( TEXT( "CameraArm" ) );
-	CameraArm->SetupAttachment( GetCapsuleComponent() );
+	CameraArm->SetupAttachment( GetRootComponent() );
 	CameraArm->TargetArmLength = 800.f;
 	CameraArm->SetRelativeRotation( FRotator( -45.f, 0.f, 0.f ) );
 	CameraArm->bUsePawnControlRotation = false;
@@ -38,6 +30,19 @@ AAuraCharacter::AAuraCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>( TEXT( "FollowCamera" ) );
 	FollowCamera->SetupAttachment( CameraArm, USpringArmComponent::SocketName );
 	FollowCamera->bUsePawnControlRotation = false;
+
+	LevelUpNiagaraComponent = CreateDefaultSubobject<UNiagaraComponent>( "LevelUpNiagaraComponent" );
+	LevelUpNiagaraComponent->SetupAttachment( GetRootComponent() );
+	LevelUpNiagaraComponent->bAutoActivate = false;
+
+	GetCharacterMovement()->bOrientRotationToMovement = true;
+	GetCharacterMovement()->RotationRate = FRotator( 0.f, 400.f, 0.f );
+	GetCharacterMovement()->bConstrainToPlane = true;
+	GetCharacterMovement()->bSnapToPlaneAtStart = true;
+
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationYaw = false;
+	bUseControllerRotationRoll = false;
 
 	CharacterClass = ECharacterClass::Elementalist;
 }
@@ -113,7 +118,7 @@ void AAuraCharacter::AddToXP_Implementation( int32 InXP )
 
 void AAuraCharacter::LevelUp_Implementation()
 {
-
+	MulticastLevelUpParticles();
 }
 
 int32 AAuraCharacter::GetPlayerLevel_Implementation()
@@ -142,4 +147,16 @@ void AAuraCharacter::InitAbilityActorInfo()
 		}
 	}
 	InitializeDefaultAttributes();
+}
+
+void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
+{
+	if( IsValid( LevelUpNiagaraComponent ) )
+	{
+		const FVector CameraLocation = FollowCamera->GetComponentLocation();
+		const FVector NiagaraSystemLocation = LevelUpNiagaraComponent->GetComponentLocation();
+		const FRotator ToCameraRotation = ( CameraLocation - NiagaraSystemLocation ).Rotation();
+		LevelUpNiagaraComponent->SetWorldRotation( ToCameraRotation );
+		LevelUpNiagaraComponent->Activate( true );
+	}
 }

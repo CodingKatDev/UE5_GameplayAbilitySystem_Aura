@@ -1,13 +1,14 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
+#include "CoreMinimal.h"
 #include "Interaction/PlayerInterface.h"
 #include "AuraCharacter.generated.h"
 
 
-class USpringArmComponent;
 class UCameraComponent;
+class UNiagaraComponent;
+class USpringArmComponent;
 
 
 UCLASS()
@@ -37,6 +38,9 @@ public:
 	virtual int32 GetPlayerLevel_Implementation() override;
 	/** End Combat Interface */
 
+	UPROPERTY( VisibleAnywhere, BlueprintReadOnly )
+	TObjectPtr<UNiagaraComponent> LevelUpNiagaraComponent;
+
 private:
 	UPROPERTY( VisibleAnywhere, Category = "Camera" )
 	TObjectPtr<USpringArmComponent> CameraArm;
@@ -45,4 +49,7 @@ private:
 	TObjectPtr<UCameraComponent> FollowCamera;
 
 	virtual void InitAbilityActorInfo() override;
+
+	UFUNCTION( NetMulticast, Reliable )
+	void MulticastLevelUpParticles() const;
 };
