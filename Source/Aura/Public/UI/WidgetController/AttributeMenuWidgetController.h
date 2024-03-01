@@ -7,7 +7,7 @@
 
 
 //struct FGameplayTag;
-//struct FGamepalyAttribute;
+//struct FGameplayAttribute;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FAttributeInfoSignature, const FAuraAttributeInfo &, Info );
@@ -24,6 +24,9 @@ public:
 
 	UPROPERTY( BlueprintAssignable, Category = "GAS|Attributes" )
 	FAttributeInfoSignature AttributeInfoDelegate;
+
+	UPROPERTY( BlueprintAssignable, Category = "GAS|Attributes" )
+	FOnPlayerStatChangedSignature AttributePointsChangedDelegate;
 
 protected:
 	UPROPERTY( EditDefaultsOnly )

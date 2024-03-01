@@ -8,7 +8,6 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 
-
 USTRUCT( BlueprintType )
 struct FWidgetControllerParams
 { 
@@ -30,6 +29,9 @@ struct FWidgetControllerParams
 	UPROPERTY( EditAnywhere, BlueprintReadWrite )
 	TObjectPtr<UAttributeSet> AttributeSet = nullptr;
 };
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnPlayerStatChangedSignature, int32, NewValue );
 
 
 UCLASS()
