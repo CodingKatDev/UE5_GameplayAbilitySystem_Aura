@@ -57,6 +57,7 @@ public:
 
 	virtual void GetLifetimeReplicatedProps( TArray<FLifetimeProperty> &OutLifetimeProps ) const override;
 	virtual void PreAttributeChange( const FGameplayAttribute &Attribute, float &NewValue )override;
+	virtual void PostAttributeChange( const FGameplayAttribute &Attribute, float OldValue, float NewValue ) override;
 	virtual void PostGameplayEffectExecute( const FGameplayEffectModCallbackData &Data )override;
 
 	TMap<FGameplayTag, TStaticFuncPtr<FGameplayAttribute()>> TagsToAttributes; // you CAN map gameplay tags to function pointers!
@@ -229,6 +230,9 @@ public:
 	ATTRIBUTE_ACCESSORS( UAuraAttributeSet, IncomingXP );
 
 private:
+	bool bTopOffHealth = false;
+	bool bTopOffMana = false;
+
 	void SetEffectProperties( const FGameplayEffectModCallbackData &Data, FEffectProperties &Props ) const;
 	void SendXPEvent( const FEffectProperties &Props );
 	void ShowFloatingText( const FEffectProperties &Props, float Damage, bool bBlockedHit, bool bCriticalHit ) const;
