@@ -6,9 +6,9 @@
 #include "AttributeMenuWidgetController.generated.h"
 
 
-//class UAttributeInfo;
-//struct FAuraAttributeInfo;
-//struct FGameplayTag;
+class UAttributeInfo;
+struct FAuraAttributeInfo;
+struct FGameplayTag;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FAttributeInfoSignature, const FAuraAttributeInfo &, Info );

@@ -13,7 +13,7 @@ void UAuraAbilitySystemComponent::AbilityActorInfoSet()
 
 void UAuraAbilitySystemComponent::AddCharacterAbilities( const TArray<TSubclassOf<UGameplayAbility>> &StartupAbilities )
 { 
-	for( TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities )
+	for( const TSubclassOf<UGameplayAbility> AbilityClass : StartupAbilities )
 	{
 		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec( AbilityClass, 1 );
 		if( const  UAuraGameplayAbility *AuraAbility = Cast<UAuraGameplayAbility>( AbilitySpec.Ability ) )
@@ -23,7 +23,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities( const TArray<TSubclassO
 		}
 	}
 	bStartupAbilitiesGiven = true;
-	AbilitiesGivenDelegate.Broadcast( this );
+	AbilitiesGivenDelegate.Broadcast();
 }
 
 void UAuraAbilitySystemComponent::AddCharacterPassiveAbilities( const TArray<TSubclassOf<UGameplayAbility>> &StartupPassiveAbilities )
@@ -138,7 +138,7 @@ void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 	if( !bStartupAbilitiesGiven )
 	{
 		bStartupAbilitiesGiven = true;
-		AbilitiesGivenDelegate.Broadcast( this );
+		AbilitiesGivenDelegate.Broadcast();
 	}
 }
 
