@@ -16,6 +16,8 @@ public:
 	FGameplayTag Input_Key_2;
 	FGameplayTag Input_Key_3;
 	FGameplayTag Input_Key_4;
+	FGameplayTag Input_Passive_1;
+	FGameplayTag Input_Passive_2;
 
 	/* Meta Attributes */
 	FGameplayTag Attributes_Meta_IncomingXP;

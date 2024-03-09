@@ -7,7 +7,7 @@
 #include "Player/AuraPlayerState.h"
 
 
-void UAuraWidgetController::SetWidgetControllerParams( const FWidgetControllerParams WCParams )
+void UAuraWidgetController::SetWidgetControllerParams( const FWidgetControllerParams &WCParams )
 { 
 	PlayerController = WCParams.PlayerController;
 	PlayerState = WCParams.PlayerState;
@@ -64,7 +64,7 @@ UAuraAbilitySystemComponent *UAuraWidgetController::GetAuraASC()
 {
 	if( AuraAbilitySystemComponent == nullptr )
 	{
-		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>( AuraAbilitySystemComponent );
+		AuraAbilitySystemComponent = Cast<UAuraAbilitySystemComponent>( AbilitySystemComponent );
 	}
 	return AuraAbilitySystemComponent;
 }
