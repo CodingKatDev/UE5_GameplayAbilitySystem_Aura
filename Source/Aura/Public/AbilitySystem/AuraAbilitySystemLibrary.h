@@ -7,6 +7,7 @@
 #include "AuraAbilitySystemLibrary.generated.h"
 
 
+class UAbilityInfo;
 class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
 class UOverlayWidgetController;
@@ -20,6 +21,7 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 	
 public:
+	/* Widget Controller */
 	UFUNCTION( BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = ( DefaultToSelf = "WorldContextObject" ) )
 	static bool MakeWidgetControllerParams( const UObject *WorldContextObject, FWidgetControllerParams &OutWCParams, AAuraHUD *&OutAuraHUD );
 
@@ -32,6 +34,7 @@ public:
 	UFUNCTION( BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = ( DefaultToSelf = "WorldContextObject" ) )
 	static USpellMenuWidgetController *GetSpellMenuWidgetController( const UObject *WorldContextObject );
 
+	/* Character Class Defaults */
 	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults" )
 	static void InitializeDefaultAttributes( const UObject *WorldContextObject, ECharacterClass CharacterClass, float Level, UAbilitySystemComponent *ASC );
 
@@ -43,6 +46,10 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults" )
 	static UCharacterClassInfo *GetCharacterClassInfo( const UObject *WorldContextObject );
 
+	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults" )
+	static UAbilityInfo *GetAbilityInfo( const UObject *WorldContextObject );
+
+	/* Gameplay Effects */
 	UFUNCTION( BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects" )
 	static bool IsBlockedHit( const FGameplayEffectContextHandle &EffectContextHandle );
 
@@ -55,6 +62,7 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffects" )
 	static void SetIsCriticalHit( UPARAM( ref )FGameplayEffectContextHandle &EffectContextHandle, bool bInIsCriticalHit );
 
+	/* Gameplay Mechanics */
 	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayMechanics" )
 	static void GetLivePlayersWithinRadius( const UObject *WorldContextObject, TArray<AActor *> &OutOverlappingActors, const TArray<AActor *> &ActorsToIgnore, float Radius, const FVector &SphereOrigin );
 
