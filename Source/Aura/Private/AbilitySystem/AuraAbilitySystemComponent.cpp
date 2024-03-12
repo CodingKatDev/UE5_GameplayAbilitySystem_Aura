@@ -3,6 +3,7 @@
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Aura/AuraLogChannels.h"
+#include "AuraGameplayTags.h"
 #include "Interaction/PlayerInterface.h"
 
 
@@ -19,6 +20,7 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities( const TArray<TSubclassO
 		if( const  UAuraGameplayAbility *AuraAbility = Cast<UAuraGameplayAbility>( AbilitySpec.Ability ) )
 		{
 			AbilitySpec.DynamicAbilityTags.AddTag( AuraAbility->StartupInputTag );
+			AbilitySpec.DynamicAbilityTags.AddTag( FAuraGameplayTags::Get().Abilities_Status_Equipped );
 			GiveAbility( AbilitySpec );
 		}
 	}
@@ -100,6 +102,19 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec( const FGameplayAb
 		if( Tag.MatchesTag( FGameplayTag::RequestGameplayTag( FName( "Input" ) ) ) )
 		{
 			return Tag;
+		}
+	}
+
+	return FGameplayTag();
+}
+
+FGameplayTag UAuraAbilitySystemComponent::GetStatusFromSpec( const FGameplayAbilitySpec &AbilitySpec )
+{
+	for( FGameplayTag StatusTag : AbilitySpec.DynamicAbilityTags )
+	{
+		if( StatusTag.MatchesTag( FGameplayTag::RequestGameplayTag( FName( "Abilities.Status" ) ) ) )
+		{
+			return StatusTag;
 		}
 	}
 

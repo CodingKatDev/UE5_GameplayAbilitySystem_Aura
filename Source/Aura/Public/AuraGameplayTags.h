@@ -59,12 +59,24 @@ public:
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
-	/* Effects */
-	FGameplayTag Effects_HitReact;
-
 	/* Abilities */
 	FGameplayTag Abilities_Attack;
 	FGameplayTag Abilities_Summon;
+
+	FGameplayTag Abilities_HitReact;
+
+	/* Ability Status */
+	FGameplayTag Abilities_Status_Locked;
+	FGameplayTag Abilities_Status_Eligible;
+	FGameplayTag Abilities_Status_Unlocked;
+	FGameplayTag Abilities_Status_Equipped;
+
+	/* Ability Type */
+	FGameplayTag Abilities_Type_Offensive;
+	FGameplayTag Abilities_Type_Passive;
+	FGameplayTag Abilities_Type_None;
+
+	/* Spells */
 	FGameplayTag Abilities_Fire_FireBolt;
 
 	/* Cooldowns */
@@ -81,6 +93,9 @@ public:
 	FGameplayTag Montage_Attack_2;
 	FGameplayTag Montage_Attack_3;
 	FGameplayTag Montage_Attack_4;
+
+	/* Effects */
+	FGameplayTag Effects_HitReact;
 
 private:
 	static FAuraGameplayTags GameplayTags;
