@@ -4,7 +4,6 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
 #include "Camera/CameraComponent.h"
-//#include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "NiagaraComponent.h"
@@ -111,6 +110,11 @@ void AAuraCharacter::AddToPlayerLevel_Implementation( int32 InPlayerLevel )
 	AAuraPlayerState *AuraPlayerState = GetPlayerState<AAuraPlayerState>();
 	check( AuraPlayerState );
 	AuraPlayerState->AddToLevel( InPlayerLevel );
+
+	if( UAuraAbilitySystemComponent *AuraASC = Cast<UAuraAbilitySystemComponent>( GetAbilitySystemComponent() ) )
+	{
+		AuraASC->UpdateAbilityStatuses( AuraPlayerState->GetPlayerLevel() );
+	}
 }
 
 void AAuraCharacter::AddToAttributePoints_Implementation( int32 InAttributePoints )
