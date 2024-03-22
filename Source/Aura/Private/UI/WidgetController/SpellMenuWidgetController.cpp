@@ -8,7 +8,7 @@
 void USpellMenuWidgetController::BroadcastInitialValues()
 {
 	BroadcastAbilityInfo();
-	SpellPointsChanged.Broadcast( GetAuraPS()->GetSpellPoints() );
+	SpellPointsChangedDelegate.Broadcast( GetAuraPS()->GetSpellPoints() );
 }
 
 void USpellMenuWidgetController::BindCallbacksToDependencies()
@@ -24,5 +24,10 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 			}
 		} );
 
-	GetAuraPS()->OnSpellPointsChangedDelegate.AddLambda( [ this ]( int32 SpellPoints ) { SpellPointsChanged.Broadcast( SpellPoints ); } );
+	GetAuraPS()->OnSpellPointsChangedDelegate.AddLambda( [ this ]( int32 SpellPoints ) { SpellPointsChangedDelegate.Broadcast( SpellPoints ); } );
+}
+
+void USpellMenuWidgetController::SpellGlobeSelected( UAuraUserWidget *SpellGlobe )
+{
+	SpellGlobeSelectedDelegate.Broadcast( SpellGlobe );
 }
