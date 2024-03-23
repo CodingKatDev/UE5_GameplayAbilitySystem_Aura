@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "SpellMenuWidgetController.generated.h"
 
@@ -9,7 +10,8 @@ class UAbilityInfo;
 class UAuraUserWidget;
 
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FSpellGlobeSelectedSignature, UAuraUserWidget*, SpellGlobe );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FSpellGlobeSelectedSignature, FGameplayTag, SpellGlobeAbilityTag );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FButtonEnabledStatusSignature, bool, bSpendPointButtonEnable, bool, bEquipButtonEnabled );
 
 
 UCLASS( BlueprintType, Blueprintable )
@@ -27,6 +29,13 @@ public:
 	UPROPERTY( BlueprintAssignable, Category = "GAS|Spell Menu" )
 	FSpellGlobeSelectedSignature SpellGlobeSelectedDelegate;
 
+	UPROPERTY( BlueprintAssignable, Category = "GAS|Spell Menu" )
+	FButtonEnabledStatusSignature ButtonEnabledStatusDelegate;
+
 	UFUNCTION( BlueprintCallable, Category = "GAS|Spell Menu" )
-	void SpellGlobeSelected( UAuraUserWidget *SpellGlobe );
+	void SpellGlobeSelected( const FGameplayTag &SpellGlobeAbilityTag );
+
+private:
+	void SpellGlobeAbilityStatus( const FGameplayTag &AbilityTag );
+	void UpdateButtonEnabledStatus( const FGameplayTag &AbilityStatus, int32 SpellPoints );
 };
