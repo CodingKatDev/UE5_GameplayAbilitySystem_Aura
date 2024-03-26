@@ -42,6 +42,9 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "GAS|Spell Menu" )
 	void SpellGlobeSelected( const FGameplayTag &SpellGlobeAbilityTag );
 
+	UFUNCTION( BlueprintCallable, Category = "GAS|Spell Menu" )
+	void SpendPointButtonPressed();
+
 private:
 	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None, FAuraGameplayTags::Get().Abilities_Status_Locked };
 	int32 CurrentSpellPoints = 0;
