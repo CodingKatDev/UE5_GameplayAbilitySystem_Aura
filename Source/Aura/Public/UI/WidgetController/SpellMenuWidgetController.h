@@ -1,5 +1,6 @@
 #pragma once
 
+#include "AuraGameplayTags.h"
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
 #include "UI/WidgetController/AuraWidgetController.h"
@@ -8,6 +9,12 @@
 
 class UAbilityInfo;
 class UAuraUserWidget;
+
+struct FSelectedAbility
+{
+	FGameplayTag Ability = FGameplayTag();
+	FGameplayTag Status = FGameplayTag();
+};
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FSpellGlobeSelectedSignature, FGameplayTag, SpellGlobeAbilityTag );
@@ -36,6 +43,9 @@ public:
 	void SpellGlobeSelected( const FGameplayTag &SpellGlobeAbilityTag );
 
 private:
-	void SpellGlobeAbilityStatus( const FGameplayTag &AbilityTag );
+	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None, FAuraGameplayTags::Get().Abilities_Status_Locked };
+	int32 CurrentSpellPoints = 0;
+
+	void SpellGlobeAbilityStatus();
 	void UpdateButtonEnabledStatus( const FGameplayTag &AbilityStatus, int32 SpellPoints );
 };
