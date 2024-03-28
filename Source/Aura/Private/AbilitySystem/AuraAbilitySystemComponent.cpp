@@ -137,6 +137,7 @@ FGameplayAbilitySpec *UAuraAbilitySystemComponent::GetSpecFromAbilityTag( const 
 			}
 		}
 	}
+
 	return nullptr;
 }
 
@@ -209,6 +210,25 @@ void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation( const FG
 		ClientUpdateAbilityStatus( AbilityTag, StatusTag, AbilitySpec->Level );
 		MarkAbilitySpecDirty( *AbilitySpec );
 	}
+}
+
+bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag( const FGameplayTag &AbilityTag, FString &OutDescription, FString &OutNextLevelDescription )
+{
+	if( const FGameplayAbilitySpec *AbilitySpec = GetSpecFromAbilityTag( AbilityTag ) )
+	{
+		if( UAuraGameplayAbility *AuraAbility = Cast<UAuraGameplayAbility>( AbilitySpec->Ability ) )
+		{
+			OutDescription = AuraAbility->GetDescription( AbilitySpec->Level );
+			OutNextLevelDescription = AuraAbility->GetNextLevelDescription( AbilitySpec->Level + 1 );
+			return true;
+		}
+	}
+	
+	// Found Locked Ability
+	const UAbilityInfo *AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo( GetAvatarActor() );
+	OutDescription = UAuraGameplayAbility::GetLockedDesciption( AbilityInfo->FindAbilityInfoForTag( AbilityTag ).LevelRequirement );
+	OutNextLevelDescription = FString();
+	return false;
 }
 
 void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()

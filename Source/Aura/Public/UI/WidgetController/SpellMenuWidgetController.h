@@ -18,7 +18,8 @@ struct FSelectedAbility
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FSpellGlobeSelectedSignature, FGameplayTag, SpellGlobeAbilityTag );
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FButtonEnabledStatusSignature, bool, bSpendPointButtonEnable, bool, bEquipButtonEnabled );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FButtonsEnabledStatusSignature, bool, bSpendPointButtonEnable, bool, bEquipButtonEnabled );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FAbilityDescriptionsSignature, FString, DescriptionString, FString, NextLevelDescriptionString );
 
 
 UCLASS( BlueprintType, Blueprintable )
@@ -29,7 +30,7 @@ class AURA_API USpellMenuWidgetController : public UAuraWidgetController
 public:
 	virtual void BroadcastInitialValues() override;
 	virtual void BindCallbacksToDependencies() override;
-
+	
 	UPROPERTY( BlueprintAssignable, Category = "GAS|Spell Menu" )
 	FOnPlayerStatChangedSignature SpellPointsChangedDelegate;
 
@@ -37,10 +38,16 @@ public:
 	FSpellGlobeSelectedSignature SpellGlobeSelectedDelegate;
 
 	UPROPERTY( BlueprintAssignable, Category = "GAS|Spell Menu" )
-	FButtonEnabledStatusSignature ButtonEnabledStatusDelegate;
+	FButtonsEnabledStatusSignature ButtonsEnabledStatusDelegate;
+
+	UPROPERTY( BlueprintAssignable, Category = "GAS|Spell Menu" )
+	FAbilityDescriptionsSignature AbilityDescriptionsDelegate;
 
 	UFUNCTION( BlueprintCallable, Category = "GAS|Spell Menu" )
 	void SpellGlobeSelected( const FGameplayTag &SpellGlobeAbilityTag );
+
+	UFUNCTION( BlueprintCallable, Category = "GAS|Spell Menu" )
+	void ClearSelectedGlobe();
 
 	UFUNCTION( BlueprintCallable, Category = "GAS|Spell Menu" )
 	void SpendPointButtonPressed();
@@ -48,7 +55,7 @@ public:
 private:
 	FSelectedAbility SelectedAbility = { FAuraGameplayTags::Get().Abilities_None, FAuraGameplayTags::Get().Abilities_Status_Locked };
 	int32 CurrentSpellPoints = 0;
-
-	void SpellGlobeAbilityStatus();
-	void UpdateButtonEnabledStatus( const FGameplayTag &AbilityStatus, int32 SpellPoints );
+	
+	void SpellGlobeAbilityDescriptions( const FGameplayTag &AbilityTag );
+	void ShouldEnableButtons( const FGameplayTag &AbilityStatus );	
 };
