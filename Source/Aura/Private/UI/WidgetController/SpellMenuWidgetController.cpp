@@ -57,6 +57,9 @@ void USpellMenuWidgetController::ClearSelectedGlobe()
 {
 	SelectedAbility.Ability = FAuraGameplayTags::Get().Abilities_None;
 	SelectedAbility.Status = FAuraGameplayTags::Get().Abilities_Status_Locked;
+
+	ButtonsEnabledStatusDelegate.Broadcast( false, false );
+	AbilityDescriptionsDelegate.Broadcast( FString(), FString() );
 }
 
 void USpellMenuWidgetController::SpellGlobeAbilityDescriptions( const FGameplayTag &AbilityTag )

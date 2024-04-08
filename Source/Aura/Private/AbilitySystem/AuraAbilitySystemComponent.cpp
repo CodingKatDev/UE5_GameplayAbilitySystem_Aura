@@ -226,7 +226,14 @@ bool UAuraAbilitySystemComponent::GetDescriptionsByAbilityTag( const FGameplayTa
 	
 	// Found Locked Ability
 	const UAbilityInfo *AbilityInfo = UAuraAbilitySystemLibrary::GetAbilityInfo( GetAvatarActor() );
-	OutDescription = UAuraGameplayAbility::GetLockedDesciption( AbilityInfo->FindAbilityInfoForTag( AbilityTag ).LevelRequirement );
+	if( !AbilityTag.IsValid() || AbilityTag.MatchesTagExact( FAuraGameplayTags::Get().Abilities_None ) )
+	{
+		OutDescription = FString();
+	}
+	else
+	{
+		OutDescription = UAuraGameplayAbility::GetLockedDesciption( AbilityInfo->FindAbilityInfoForTag( AbilityTag ).LevelRequirement );
+	}
 	OutNextLevelDescription = FString();
 	return false;
 }
