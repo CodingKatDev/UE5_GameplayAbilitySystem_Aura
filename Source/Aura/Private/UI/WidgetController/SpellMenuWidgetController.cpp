@@ -42,6 +42,13 @@ void USpellMenuWidgetController::BindCallbacksToDependencies()
 
 void USpellMenuWidgetController::SpellGlobeSelected( const FGameplayTag &SpellGlobeAbilityTag )
 {
+	if( bWaitingForEquipSelection )
+	{
+		const FGameplayTag SelectedAbilityType = AbilityInfo->FindAbilityInfoForTag( SpellGlobeAbilityTag ).AbilityType;
+		StopWaitingForEquipSelectionDelegate.Broadcast( SelectedAbilityType );
+		bWaitingForEquipSelection = false;
+	}
+
 	const FGameplayAbilitySpec *AbilitySpec = GetAuraASC()->GetSpecFromAbilityTag( SpellGlobeAbilityTag );
 	FGameplayTag SpellGlobeStatusTag = GetAuraASC()->GetStatusFromSpec( *AbilitySpec );
 
@@ -55,11 +62,34 @@ void USpellMenuWidgetController::SpellGlobeSelected( const FGameplayTag &SpellGl
 
 void USpellMenuWidgetController::ClearSelectedGlobe()
 {
+	if( bWaitingForEquipSelection )
+	{
+		const FGameplayTag SelectedAbilityType = AbilityInfo->FindAbilityInfoForTag( SelectedAbility.Ability ).AbilityType;
+		StopWaitingForEquipSelectionDelegate.Broadcast( SelectedAbilityType );
+		bWaitingForEquipSelection = false;
+	}
+
 	SelectedAbility.Ability = FAuraGameplayTags::Get().Abilities_None;
 	SelectedAbility.Status = FAuraGameplayTags::Get().Abilities_Status_Locked;
 
 	ButtonsEnabledStatusDelegate.Broadcast( false, false );
 	AbilityDescriptionsDelegate.Broadcast( FString(), FString() );
+}
+
+void USpellMenuWidgetController::SpendPointButtonPressed()
+{
+	if( GetAuraASC() )
+	{
+		GetAuraASC()->ServerSpendSpellPoint( SelectedAbility.Ability );
+	}
+}
+
+void USpellMenuWidgetController::EquipButtonPressed()
+{
+	const FGameplayTag AbilityType = AbilityInfo->FindAbilityInfoForTag( SelectedAbility.Ability ).AbilityType;
+
+	WaitForEquipSelectionDelegate.Broadcast( AbilityType );
+	bWaitingForEquipSelection = true;
 }
 
 void USpellMenuWidgetController::SpellGlobeAbilityDescriptions( const FGameplayTag &AbilityTag )
@@ -90,12 +120,4 @@ void USpellMenuWidgetController::ShouldEnableButtons( const FGameplayTag &Status
 	}
 
 	ButtonsEnabledStatusDelegate.Broadcast( bEnableSpendPoint, bEnableEquip );
-}
-
-void USpellMenuWidgetController::SpendPointButtonPressed()
-{
-	if( GetAuraASC() )
-	{
-		GetAuraASC()->ServerSpendSpellPoint( SelectedAbility.Ability );
-	}
 }
