@@ -67,6 +67,12 @@ public:
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
 
+	/* Debuff Parameters */
+	FGameplayTag Debuff_Chance;
+	FGameplayTag Debuff_Damage;
+	FGameplayTag Debuff_Duration;
+	FGameplayTag Debuff_Frequency;
+
 	/* Abilities */
 	FGameplayTag Abilities_None;
 	FGameplayTag Abilities_Attack;
