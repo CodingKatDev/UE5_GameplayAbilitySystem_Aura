@@ -129,6 +129,8 @@ void USpellMenuWidgetController::OnAbilityEquipped( const FGameplayTag &AbilityT
 	AbilityInfoDelegate.Broadcast( Info );
 
 	StopWaitingForEquipSelectionDelegate.Broadcast( AbilityInfo->FindAbilityInfoForTag( AbilityTag ).AbilityType );
+	SpellGlobeReassignedDelegate.Broadcast( AbilityTag );
+	ClearSelectedGlobe();
 }
 
 void USpellMenuWidgetController::SpellGlobeAbilityDescriptions( const FGameplayTag &AbilityTag )
