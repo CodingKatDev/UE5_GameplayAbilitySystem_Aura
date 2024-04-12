@@ -59,6 +59,14 @@ public:
 
 	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
 
+	/* Debuffs */
+	FGameplayTag Debuff_Arcane;
+	FGameplayTag Debuff_Burn;
+	FGameplayTag Debuff_Physical;
+	FGameplayTag Debuff_Stun;
+
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToDebuffs;
+
 	/* Abilities */
 	FGameplayTag Abilities_None;
 	FGameplayTag Abilities_Attack;
@@ -67,15 +75,15 @@ public:
 	FGameplayTag Abilities_HitReact;
 
 	/* Ability Status */
-	FGameplayTag Abilities_Status_Locked;
 	FGameplayTag Abilities_Status_Eligible;
-	FGameplayTag Abilities_Status_Unlocked;
 	FGameplayTag Abilities_Status_Equipped;
+	FGameplayTag Abilities_Status_Locked;
+	FGameplayTag Abilities_Status_Unlocked;
 
 	/* Ability Type */
+	FGameplayTag Abilities_Type_None;
 	FGameplayTag Abilities_Type_Offensive;
 	FGameplayTag Abilities_Type_Passive;
-	FGameplayTag Abilities_Type_None;
 
 	/* Spells */
 	FGameplayTag Abilities_Fire_FireBolt;
