@@ -1,6 +1,6 @@
 #pragma once
 
-//#include "AbilitySystemComponent.h"
+#include "AbilitySystemComponent.h"
 #include "CoreMinimal.h"
 #include "Data/CharacterClassInfo.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
@@ -41,8 +41,6 @@ public:
 	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults" )
 	static void GiveStartupAbilities( const UObject *WorldContextObject, ECharacterClass CharacterClass, UAbilitySystemComponent *ASC );
 
-	static int32 GetXPRewardForClassAndLevel( const UObject *WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel );
-
 	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults" )
 	static UCharacterClassInfo *GetCharacterClassInfo( const UObject *WorldContextObject );
 
@@ -68,4 +66,9 @@ public:
 
 	UFUNCTION( BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMechanics" )
 	static bool IsNotFriend( AActor *FirstActor, AActor *SecondActor );
+
+	UFUNCTION( BlueprintCallable, Category = "AuraAbilitySystemLibrary|DamageEffect" )
+	static FGameplayEffectContextHandle ApplyDamageEffect( const FDamageEffectParams &DamageEffectParams );
+
+	static int32 GetXPRewardForClassAndLevel( const UObject *WorldContextObject, ECharacterClass CharacterClass, int32 CharacterLevel );
 };
