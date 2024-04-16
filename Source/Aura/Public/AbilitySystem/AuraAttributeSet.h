@@ -79,7 +79,6 @@ public:
 	UFUNCTION()
 	void OnRep_Mana( const FGameplayAttributeData &OldMana ) const;
 
-
 	/*
 	 * Primary Attributes
 	 */
@@ -110,7 +109,6 @@ public:
 
 	UFUNCTION()
 	void OnRep_Vigor( const FGameplayAttributeData &OldVigor )const;
-
 
 	/*
 	 * Secondary Attributes
@@ -184,7 +182,6 @@ public:
 
 	UFUNCTION()
 	void OnRep_MaxMana( const FGameplayAttributeData &OldMaxMana )const;
-	
    
    /*
 	* Resistance Attributes
@@ -217,7 +214,6 @@ public:
 	UFUNCTION()
 	void OnRep_PhysicalResistance( const FGameplayAttributeData &OldPhysicalResistance )const;
 
-
 	/*
 	 * Meta Attributes
 	 */
@@ -233,6 +229,9 @@ private:
 	bool bTopOffHealth = false;
 	bool bTopOffMana = false;
 
+	void HandleIncomingDamage( const FEffectProperties &Props );
+	void HandleIncomingXP( const FEffectProperties &Props );
+	void HandleDebuff( const FEffectProperties &Props );
 	void SetEffectProperties( const FGameplayEffectModCallbackData &Data, FEffectProperties &Props ) const;
 	void SendXPEvent( const FEffectProperties &Props );
 	void ShowFloatingText( const FEffectProperties &Props, float Damage, bool bBlockedHit, bool bCriticalHit ) const;

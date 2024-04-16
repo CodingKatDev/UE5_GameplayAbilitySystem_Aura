@@ -245,6 +245,15 @@ void UAuraAbilitySystemLibrary::SetDebuffFrequency( UPARAM( ref )FGameplayEffect
 	}
 }
 
+void UAuraAbilitySystemLibrary::SetDamageType( UPARAM( ref )FGameplayEffectContextHandle &EffectContextHandle, const FGameplayTag &InDamageType )
+{
+	if( FAuraGameplayEffectContext *AuraEffectContext = static_cast< FAuraGameplayEffectContext * >( EffectContextHandle.Get() ) )
+	{
+		const TSharedPtr<FGameplayTag>DamageType = MakeShared<FGameplayTag>( InDamageType );
+		AuraEffectContext->SetDamageType( DamageType );
+	}
+}
+
 void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius( const UObject *WorldContextObject, TArray<AActor *> &OutOverlappingActors, 
 															const TArray<AActor *> &ActorsToIgnore, float Radius, const FVector &SphereOrigin )
 {
