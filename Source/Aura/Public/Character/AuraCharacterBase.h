@@ -11,6 +11,7 @@
 class UAbilitySystemComponent;
 class UAnimMontage;
 class UAttributeSet;
+class UDebuffNiagaraComponent;
 class UGameplayAbility;
 class UGameplayEffect;
 class UNiagaraSystem;
@@ -28,18 +29,23 @@ public:
 	UAttributeSet *GetAttributeSet() const { return AttributeSet; }
 
 	/** Combat Interface */
+	virtual ECharacterClass GetCharacterClass_Implementation() override;
 	virtual void Die() override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor *GetAvatar_Implementation() override;
 	virtual FVector GetCombatSocketLocation_Implementation( const FGameplayTag &MontageTag ) override;
 	virtual UAnimMontage *GetHitReactMontage_Implementation() override;
 	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
-	virtual UNiagaraSystem *GetBloodEffect_Implementation() override;
 	virtual FTaggedMontage GetTaggedMontageByTag_Implementation( const FGameplayTag &MontageTag ) override;
+	virtual UNiagaraSystem *GetBloodEffect_Implementation() override;
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void UpdateMinionCount_Implementation( int32 Amount ) override;
-	virtual ECharacterClass GetCharacterClass_Implementation() override;
+	virtual FOnASCRegisteredSignature GetOnASCRegisteredDelegate() override;
+	//virtual FOnDeathSignature GetOnDeathDelegate() override;
 	/** end Combat Interface */
+
+	FOnASCRegisteredSignature OnASCRegistered;
+	//FOnDeathSignature OnDeath;
 
 	UFUNCTION( NetMulticast, Reliable )
 	virtual void MulticastHandleDeath();
@@ -49,6 +55,34 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void InitAbilityActorInfo();
+	void ApplyEffectToSelf( TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level ) const;
+	virtual void InitializeDefaultAttributes() const;
+	void AddCharacterAbilities();
+
+	UPROPERTY()
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
+
+	UPROPERTY( BlueprintReadOnly, EditAnywhere, Category = "Attributes" )
+	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
+
+	UPROPERTY( BlueprintReadOnly, EditAnywhere, Category = "Attributes" )
+	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
+
+	UPROPERTY( BlueprintReadOnly, EditAnywhere, Category = "Attributes" )
+	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
+
+	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults" )
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
+	/* Combat */
+	bool bDead = false;
+
+	UPROPERTY( VisibleAnywhere )
+	TObjectPtr<UDebuffNiagaraComponent> BurnDebuffComponent; 	
 
 	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Combat" )
 	TObjectPtr<USkeletalMeshComponent> Weapon;
@@ -64,29 +98,7 @@ protected:
 
 	UPROPERTY( EditAnywhere, Category = "Combat" )
 	FName TailSocketName;
-
-	bool bDead = false;
-
-	UPROPERTY()
-	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
-
-	UPROPERTY()
-	TObjectPtr<UAttributeSet> AttributeSet;
-
-	virtual void InitAbilityActorInfo();
-
-	UPROPERTY( BlueprintReadOnly, EditAnywhere, Category = "Attributes" )
-	TSubclassOf<UGameplayEffect> DefaultPrimaryAttributes;
-
-	UPROPERTY( BlueprintReadOnly, EditAnywhere, Category = "Attributes" )
-	TSubclassOf<UGameplayEffect> DefaultSecondaryAttributes;
-
-	UPROPERTY( BlueprintReadOnly, EditAnywhere, Category = "Attributes" )
-	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
-
-	void ApplyEffectToSelf( TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level ) const;
-	virtual void InitializeDefaultAttributes() const;
-	void AddCharacterAbilities();
+	int32 MinionCount = 0;
 
 	/* Dissolve Effects */
 	void Dissolve();
@@ -108,12 +120,6 @@ protected:
 
 	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Combat" )
 	USoundBase *DeathSound;
-
-	/* Minions */
-	int32 MinionCount = 0;
-
-	UPROPERTY( EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults" )
-	ECharacterClass CharacterClass = ECharacterClass::Warrior;
 
 private:
 	UPROPERTY( EditAnywhere, Category = "Abilities" )

@@ -7,6 +7,7 @@
 #include "CombatInterface.generated.h"
 
 
+class UAbilitySystemComponent;
 class UAnimMontage;
 class UNiagaraSystem;
 
@@ -28,6 +29,11 @@ struct FTaggedMontage
 	USoundBase *ImpactSound = nullptr;
 };
 
+
+DECLARE_MULTICAST_DELEGATE_OneParam( FOnASCRegisteredSignature, UAbilitySystemComponent * );
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnDeathSignature, AActor *, DeadActor );
+
+
 // This class does not need to be modified.
 UINTERFACE( MinimalAPI, BlueprintType  )
 class UCombatInterface : public UInterface
@@ -43,6 +49,9 @@ class AURA_API ICombatInterface
 public:
 	UFUNCTION( BlueprintNativeEvent )
 	int32 GetPlayerLevel();
+
+	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
+	ECharacterClass GetCharacterClass();
 
 	virtual void Die() = 0;
 
@@ -65,10 +74,10 @@ public:
 	TArray<FTaggedMontage>GetAttackMontages();
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
-	UNiagaraSystem *GetBloodEffect();
+	FTaggedMontage GetTaggedMontageByTag( const FGameplayTag &MontageTag );
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
-	FTaggedMontage GetTaggedMontageByTag( const FGameplayTag &MontageTag );
+	UNiagaraSystem *GetBloodEffect();
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
 	int32 GetMinionCount();
@@ -76,6 +85,6 @@ public:
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
 	void UpdateMinionCount(int32 Amount);
 
-	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
-	ECharacterClass GetCharacterClass();
+	virtual FOnASCRegisteredSignature GetOnASCRegisteredDelegate() = 0;
+	/*virtual FOnDeathSignature GetOnDeathDelegate() = 0;*/
 };

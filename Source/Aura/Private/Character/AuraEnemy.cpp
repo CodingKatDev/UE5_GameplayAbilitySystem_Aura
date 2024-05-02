@@ -45,7 +45,6 @@ void AAuraEnemy::PossessedBy( AController *NewController )
 	AuraAIController->RunBehaviorTree( BehaviorTree );
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool( FName( "HitReacting" ), false );
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool( FName( "RangedAttacker" ), CharacterClass != ECharacterClass::Warrior );
-
 }
 
 void AAuraEnemy::HighlightActor()
@@ -130,8 +129,7 @@ void AAuraEnemy::BeginPlay()
 			}
 		);
 	
-		AbilitySystemComponent->RegisterGameplayTagEvent( FAuraGameplayTags::Get().Effects_HitReact, 
-														  EGameplayTagEventType::NewOrRemoved ).AddUObject( this, &AAuraEnemy::HitReactTagChanged );
+		AbilitySystemComponent->RegisterGameplayTagEvent( FAuraGameplayTags::Get().Effects_HitReact, EGameplayTagEventType::NewOrRemoved ).AddUObject( this, &AAuraEnemy::HitReactTagChanged );
 
 		OnHealthChanged.Broadcast( AuraAS->GetHealth() );
 		OnMaxHealthChanged.Broadcast( AuraAS->GetMaxHealth() );
@@ -147,6 +145,8 @@ void AAuraEnemy::InitAbilityActorInfo()
 	{
 		InitializeDefaultAttributes();
 	}
+
+	OnASCRegistered.Broadcast( AbilitySystemComponent );
 }
 
 void AAuraEnemy::InitializeDefaultAttributes() const

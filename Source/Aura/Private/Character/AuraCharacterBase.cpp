@@ -2,6 +2,7 @@
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/Debuff/DebuffNiagaraComponent.h"
 #include "Aura/Aura.h"
 #include "AuraGameplayTags.h"
 #include "Components/CapsuleComponent.h"
@@ -11,6 +12,10 @@
 AAuraCharacterBase::AAuraCharacterBase()
 {
 	PrimaryActorTick.bCanEverTick = false;
+
+	BurnDebuffComponent = CreateDefaultSubobject<UDebuffNiagaraComponent>( "BurnDebuffComponent" );
+	BurnDebuffComponent->SetupAttachment( GetRootComponent() );
+	BurnDebuffComponent->DebuffTag = FAuraGameplayTags::Get().Debuff_Burn;
 
 	GetCapsuleComponent()->SetCollisionResponseToChannel( ECC_Camera, ECR_Ignore );
 	GetCapsuleComponent()->SetGenerateOverlapEvents( false );
@@ -26,6 +31,11 @@ AAuraCharacterBase::AAuraCharacterBase()
 UAbilitySystemComponent *AAuraCharacterBase::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent; 
+}
+
+ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()
+{
+	return CharacterClass;
 }
 
 void AAuraCharacterBase::Die()
@@ -77,11 +87,6 @@ TArray<FTaggedMontage> AAuraCharacterBase::GetAttackMontages_Implementation()
 	return AttackMontages;
 }
 
-UNiagaraSystem *AAuraCharacterBase::GetBloodEffect_Implementation()
-{
-	return BloodEffect;
-}
-
 FTaggedMontage AAuraCharacterBase::GetTaggedMontageByTag_Implementation( const FGameplayTag &MontageTag )
 {
 	for( FTaggedMontage TaggedMontage : AttackMontages )
@@ -94,6 +99,11 @@ FTaggedMontage AAuraCharacterBase::GetTaggedMontageByTag_Implementation( const F
 	return FTaggedMontage();
 }
 
+UNiagaraSystem *AAuraCharacterBase::GetBloodEffect_Implementation()
+{
+	return BloodEffect;
+}
+
 int32 AAuraCharacterBase::GetMinionCount_Implementation()
 {
 	return MinionCount;
@@ -104,10 +114,15 @@ void AAuraCharacterBase::UpdateMinionCount_Implementation( int32 Amount )
 	MinionCount += Amount;
 }
 
-ECharacterClass AAuraCharacterBase::GetCharacterClass_Implementation()
+FOnASCRegisteredSignature AAuraCharacterBase::GetOnASCRegisteredDelegate()
 {
-	return CharacterClass;
+	return OnASCRegistered;
 }
+
+//FOnDeathSignature AAuraCharacterBase::GetOnDeathDelegate()
+//{
+//	return OnDeath;
+//}
 
 void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 {
@@ -125,10 +140,12 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	GetCapsuleComponent()->SetCollisionEnabled( ECollisionEnabled::NoCollision );
 	Dissolve();
 	bDead = true;
+	BurnDebuffComponent->Deactivate();
+	//OnDeath.Broadcast( this );
 }
 
 void AAuraCharacterBase::BeginPlay()
-{ 
+{
 	Super::BeginPlay();
 }
 

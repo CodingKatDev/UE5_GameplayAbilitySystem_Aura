@@ -158,6 +158,7 @@ void AAuraCharacter::InitAbilityActorInfo()
 	Cast<UAuraAbilitySystemComponent>( AuraPlayerState->GetAbilitySystemComponent() )->AbilityActorInfoSet();
 	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
 	AttributeSet = AuraPlayerState->GetAttributeSet();
+	OnASCRegistered.Broadcast( AbilitySystemComponent );
 
 	// In multi-player client's player controller will be valid on their machine, but other players' controllers won't
 	// Only want to continue if not null, but don't assert as this will cause unwanted crash
