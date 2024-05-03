@@ -30,7 +30,7 @@ public:
 
 	/** Combat Interface */
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
-	virtual void Die() override;
+	virtual void Die( const FVector &DeathImpulse ) override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor *GetAvatar_Implementation() override;
 	virtual FVector GetCombatSocketLocation_Implementation( const FGameplayTag &MontageTag ) override;
@@ -48,7 +48,7 @@ public:
 	//FOnDeathSignature OnDeath;
 
 	UFUNCTION( NetMulticast, Reliable )
-	virtual void MulticastHandleDeath();
+	virtual void MulticastHandleDeath( const FVector &DeathImpulse );
 
 	UPROPERTY( EditAnywhere, Category = "Combat" )
 	TArray<FTaggedMontage> AttackMontages;

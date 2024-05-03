@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Character/AuraCharacterBase.h"
+#include "CoreMinimal.h"
 #include "Interaction/EnemyInterface.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 #include "AuraEnemy.generated.h"
@@ -28,7 +28,7 @@ public:
 
 	/** Combat Interface */
 	int32 GetPlayerLevel_Implementation() override;
-	virtual void Die() override;
+	virtual void Die( const FVector &DeathImpulse ) override;
 	virtual void SetCombatTarget_Implementation( AActor *InCombatTarget ) override;
 	virtual AActor *GetCombatTarget_Implementation() const override;
 	/** end Combat Interface */
