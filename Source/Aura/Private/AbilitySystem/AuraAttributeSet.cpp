@@ -2,8 +2,8 @@
 
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
-#include "AuraGameplayTags.h"
 #include "AuraAbilityTypes.h"
+#include "AuraGameplayTags.h"
 #include "GameFramework/Character.h"
 #include "GameplayEffectExtension.h"
 #include "Interaction/CombatInterface.h"
@@ -153,6 +153,8 @@ void UAuraAttributeSet::HandleIncomingDamage( const FEffectProperties &Props )
 		const bool bFatal = NewHealth <= 0.f;
 		if( bFatal )
 		{
+			//TODO: Use Death Impulse!
+
 			ICombatInterface *CombatInterface = Cast<ICombatInterface>( Props.TargetAvatarActor );
 			if( CombatInterface )
 			{
@@ -256,7 +258,6 @@ void UAuraAttributeSet::HandleDebuff( const FEffectProperties &Props )
 void UAuraAttributeSet::SetEffectProperties( const FGameplayEffectModCallbackData &Data, FEffectProperties &Props ) const
 {
 	// Source = causer of the effect, Target = target of the effect (owner of this AS)
-
 	Props.EffectContextHandle = Data.EffectSpec.GetContext();
 	Props.SourceASC = Props.EffectContextHandle.GetOriginalInstigatorAbilitySystemComponent();
 
