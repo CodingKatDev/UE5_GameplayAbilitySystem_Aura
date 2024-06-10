@@ -13,6 +13,7 @@ class IEnemyInterface;
 class UInputAction;
 struct FInputActionValue;
 class UInputMappingContext;
+class UNiagaraSystem;
 class USplineComponent;
 
 
@@ -71,14 +72,17 @@ private:
 	bool bAutoRunning = false;
 	bool bTargeting = false;
 
-	UPROPERTY( EditDefaultsOnly )
+	UPROPERTY( EditDefaultsOnly, Category = "Aura Player Controller" )
 	float AutoRunAcceptanceRadius = 50.f;
 
 	UPROPERTY( VisibleAnywhere )
 	TObjectPtr<USplineComponent> Spline;
 
+	UPROPERTY( EditDefaultsOnly, Category = "Aura Player Controller" )
+	TObjectPtr<UNiagaraSystem> ClickNiagaraSystem;
+
 	void AutoRun();
 
-	UPROPERTY( EditDefaultsOnly )
+	UPROPERTY( EditDefaultsOnly, Category = "Aura Player Controller" )
 	TSubclassOf<UDamageTextComponent> DamageTextComponentClass;
 };
