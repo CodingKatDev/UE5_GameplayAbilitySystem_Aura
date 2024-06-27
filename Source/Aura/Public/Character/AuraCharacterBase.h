@@ -42,6 +42,7 @@ public:
 	virtual void UpdateMinionCount_Implementation( int32 Amount ) override;
 	virtual FOnASCRegisteredSignature GetOnASCRegisteredDelegate() override;
 	//virtual FOnDeathSignature GetOnDeathDelegate() override;
+	virtual USkeletalMeshComponent *GetWeapon_Implementation() override;
 	/** end Combat Interface */
 
 	FOnASCRegisteredSignature OnASCRegistered;
