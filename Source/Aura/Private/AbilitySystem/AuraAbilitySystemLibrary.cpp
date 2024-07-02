@@ -309,6 +309,54 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius( const UObject *World
 	}
 }
 
+void UAuraAbilitySystemLibrary::GetClosestTargets( int32 MaxTargets, const TArray<AActor *> &Actors, TArray<AActor *> &OutClosestTargets, const FVector &Origin )
+{
+	if( Actors.Num() <= MaxTargets )
+	{
+		OutClosestTargets = Actors;
+		return;
+	}
+
+	TArray<AActor *> ActorsToSort = Actors;
+
+	ActorsToSort.Sort( [ Origin ]( const AActor &ActorA, const AActor &ActorB ) 
+					   {
+						   const double DistanceA = FVector::DistSquared( ActorA.GetActorLocation(), Origin );
+						   const double DistanceB = FVector::DistSquared( ActorB.GetActorLocation(), Origin );
+						   return DistanceA < DistanceB;
+					   } );
+
+	for( int32 i = 0; i < MaxTargets; i++ )
+	{
+		OutClosestTargets.Add( ActorsToSort[ i ] );
+	}
+
+	/*TArray <AActor *> ActorsToCheck = Actors;
+	int32 NumTargetsFound = 0;
+
+	while( NumTargetsFound < MaxTargets )
+	{
+		if( ActorsToCheck.Num() == 0 ) break;
+
+		double ClosestDistance = TNumericLimits<double>::Max();
+		AActor *ClosestActor;
+
+		for( AActor *PotentialTarget : ActorsToCheck )
+		{
+			const double Distance = ( PotentialTarget->GetActorLocation() - Origin ).Length();
+			if( Distance < ClosestDistance )
+			{
+				ClosestDistance = Distance;
+				ClosestActor = PotentialTarget;
+			}
+		}
+
+		ActorsToCheck.Remove( ClosestActor );
+		OutClosestTargets.AddUnique( ClosestActor );
+		++NumTargetsFound;
+	}*/
+}
+
 bool UAuraAbilitySystemLibrary::IsNotFriend( AActor *FirstActor, AActor *SecondActor )
 {
 	const bool bBothArePlayers = FirstActor->ActorHasTag( FName( "Player" ) ) && SecondActor->ActorHasTag( FName( "Player" ) );
