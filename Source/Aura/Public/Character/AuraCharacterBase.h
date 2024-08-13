@@ -31,6 +31,7 @@ public:
 	/** Combat Interface */
 	virtual ECharacterClass GetCharacterClass_Implementation() override;
 	virtual void Die( const FVector &DeathImpulse ) override;
+	virtual FOnDeathSignature &GetOnDeathDelegate() override;
 	virtual bool IsDead_Implementation() const override;
 	virtual AActor *GetAvatar_Implementation() override;
 	virtual FVector GetCombatSocketLocation_Implementation( const FGameplayTag &MontageTag ) override;
@@ -41,12 +42,11 @@ public:
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void UpdateMinionCount_Implementation( int32 Amount ) override;
 	virtual FOnASCRegisteredSignature GetOnASCRegisteredDelegate() override;
-	//virtual FOnDeathSignature GetOnDeathDelegate() override;
 	virtual USkeletalMeshComponent *GetWeapon_Implementation() override;
 	/** end Combat Interface */
 
 	FOnASCRegisteredSignature OnASCRegistered;
-	//FOnDeathSignature OnDeath;
+	FOnDeathSignature OnDeathDelegate;
 
 	UFUNCTION( NetMulticast, Reliable )
 	virtual void MulticastHandleDeath( const FVector &DeathImpulse );

@@ -31,7 +31,7 @@ struct FTaggedMontage
 
 
 DECLARE_MULTICAST_DELEGATE_OneParam( FOnASCRegisteredSignature, UAbilitySystemComponent * );
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnDeathSignature, AActor *, DeadActor );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam( FOnDeathSignature, AActor *, DeadActor );
 
 
 // This class does not need to be modified.
@@ -54,6 +54,7 @@ public:
 	ECharacterClass GetCharacterClass();
 
 	virtual void Die( const FVector &DeathImpulse ) = 0;
+	virtual FOnDeathSignature &GetOnDeathDelegate() = 0;
 
 	UFUNCTION( BlueprintNativeEvent, BlueprintCallable )
 	bool IsDead() const;
@@ -86,7 +87,6 @@ public:
 	void UpdateMinionCount(int32 Amount);
 
 	virtual FOnASCRegisteredSignature GetOnASCRegisteredDelegate() = 0;
-	/*virtual FOnDeathSignature GetOnDeathDelegate() = 0;*/
 
 	UFUNCTION( BlueprintImplementableEvent, BlueprintCallable )
 	void SetInShockLoop( bool bInLoop );
